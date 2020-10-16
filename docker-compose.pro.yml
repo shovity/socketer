@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+
+  socket:
+    environment:
+      NODE_ENV: production
+      ENV: pro
+    ports:
+      - 2404-2406:2404
+    restart: always
+
+  redis:
+    restart: always
+
+networks:
+  backend:

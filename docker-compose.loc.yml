@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+
+  socket:
+    volumes:
+      - .:/app
+    environment:
+      NODE_ENV: development
+      ENV: loc
+    command: yarn dev -L
+    ports:
+      - 2404:2404

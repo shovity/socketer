@@ -1,0 +1,72 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    meta(name='robots', content='noindex')
+    title Socket
+
+    style.
+      table {
+        border-collapse: collapse;
+        font-size: 12px;
+        font-family: monospace;
+        margin-bottom: 30px;
+      }
+
+      th, td {
+        border: 1px solid #ccc;
+        padding: 5px 12px;
+        text-align: left;
+      }
+
+      tbody > tr:nth-child(odd) {
+        background-color: #eee;
+      }
+
+  body
+    p Monitor - #{nsp}
+    p#summary dsf
+
+    table
+      tbody
+        tr
+          td Heap Used
+          td #{pstatus.heapUsed} (MB)
+        tr
+          td CPU Time (user/system)
+          td #{pstatus.cpuUsage.user}/#{pstatus.cpuUsage.system} (μs)
+        tr
+          td Hostname
+          td #{hostname}
+
+    table
+      thead
+        tr
+          td sid
+          td uid
+          td username
+          td href
+      tbody#socket_list
+
+    script(src='/socket.io/socket.io.js')
+    script.
+      const socket = io('/#{nsp}')
+      socket.emit('login', { username: 'monitor', href: location.href, id: 'monitor' })
+      socket.emit('join_room', 'user_monitoring')
+      socket.on('clients_changed', sockets => {
+        socket_list.innerHTML = sockets.map(s => {
+          return `
+          <tr>
+            <td>${s.sid}</td>
+            <td>${s.user.id}</td>
+            <td>${s.user.username}</td>
+            <td>${(s.user.href || '').split('?')[0]}</td>
+          </tr>`
+        }).join('')
+
+        const nUser = new Set(sockets.map(s => s.user.id)).size
+
+        summary.innerHTML = `sockets: ${sockets.length}, users: ${nUser}`
+      })

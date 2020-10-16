@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Usage:
+# yarn up loc
+# yarn up dev
+# yarn up pro
+
+env=$1
+
+case "$env" in
+  loc)
+    docker-compose -f docker-compose.yml -f docker-compose.loc.yml up
+    ;;
+  
+  dev)
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d 
+    ;;
+
+  pro)
+    docker-compose -f docker-compose.yml -f docker-compose.pro.yml up -d --scale socket=3
+    ;;
+
+  *)
+    echo environment not found!
+esac

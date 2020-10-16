@@ -1,0 +1,29 @@
+{
+  "name": "socket",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "git@gitlab.com:dichungvn/socket-service.git",
+  "author": "Shovity <shovity@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node app",
+    "dev": "npx nodemon app",
+    "up": "sh bin/up"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-list-endpoints": "^4.0.1",
+    "pug": "^2.0.3",
+    "redis": "^2.8.0",
+    "socket.io": "^2.2.0",
+    "socket.io-redis": "^5.2.0"
+  },
+  "devDependencies": {
+    "artillery": "^1.6.0-28",
+    "nodemon": "^1.18.10"
+  }
+}
